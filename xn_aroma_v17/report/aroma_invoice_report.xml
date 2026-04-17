@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="account.aroma_invoice_report1">
+	<t t-call="web.html_container">
+		<t t-foreach="docs" t-as="o">
+			<t t-call="xn_aroma_v17.external_layout_invoice">
+				<div class="page">
+					<div class="row">
+						 <div name="invoice_address">
+						   <strong>BILL TO&#160;&#160;&#160;&#160;&#160;<span t-field="o.partner_id"/> </strong>
+							<br/>
+
+							<span t-if="o.partner_id.street">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.street"/>
+								<br/>
+							</span>
+							
+
+							<span t-if="o.partner_id.street2">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.street2"/>
+								<br/>
+							</span>
+
+							<span t-if="o.partner_id.zip">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;P.O Box:&#160;&#160;<span t-field="o.partner_id.zip"/><br/>
+							</span>
+
+							<span t-if="o.partner_id.city and o.partner_id.state_id">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.city"/> &#160;- &#160; <span t-field="o.partner_id.state_id"/><br/>
+							</span> 
+
+							<span t-if="o.partner_id.city and not o.partner_id.state_id">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.city"/><br/>
+							</span> 
+
+							<span t-if="o.partner_id.state_id and not o.partner_id.city">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.state_id"/><br/>
+							</span> 																				
+							<span t-if="o.partner_id.country_id">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.country_id"/><br/>
+							</span>
+							<span t-if="o.partner_id.vat">
+								&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span t-field="o.partner_id.vat"/><br/>
+							</span>							
+
+							<br/>							
+  
+						</div>
+					</div>
+					<div class="row">
+						<div name="a" class="col-xs-12">
+							<div name ="reference" class="col-xs-6">
+								<h3><b>Tax Invoice</b></h3>
+								<br/>
+								<span t-if="o.number">
+									<strong> Invoice No &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;<span t-field="o.number"/></strong>
+									<br/>
+								</span>
+								
+								<span t-if="o.date_invoice">
+									 Date &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;<span t-field="o.date_invoice"/>
+									 <br/>
+								</span>
+								
+								<span t-if="o.xn_reference_no">
+									Reference No &#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<span t-field="o.xn_reference_no"/>
+									<br/>
+								</span>
+
+								<span t-if="o.partner_id.ref">
+									Account No &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<span t-field="o.partner_id.ref"/>
+									<br/>
+								</span>
+								
+								 <span t-if="o.name">
+									Your Order No &#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;<span t-field="o.name"/>
+									<br/>
+								</span>
+								<span t-if="o.payment_term_id">
+									Payment &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;<span t-field="o.payment_term_id"/>
+									<br/> 
+								</span>
+								<span t-if="o.xn_description_of_goods">
+									Description of <br/>Goods &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:  &#160;&#160;<span t-field="o.xn_description_of_goods"/>
+								</span>
+							</div>
+							<div name="a" class="col-xs-5 pull-right">
+								<br/><br/><br/><br/>
+								<span t-if="o.partner_shipping_id">
+									Mark :
+									<br/>
+									<span t-field="o.partner_shipping_id"/>
+								</span>
+								<br/>
+								<br/>
+								Shipping Details :
+								<br/>
+								<span t-if="o.incoterms_id">
+									Terms of Delivery&#160;&#160;:
+							  
+									<span t-field="o.incoterms_id"/>
+									<br/>
+								</span>
+								<span t-if="o.xn_transportation_id">
+									Forwarding&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:
+								   
+									<span t-field="o.xn_transportation_id"/>
+									<br/>
+								</span>
+								<span t-if="o.xn_insurance_id">
+									Insurance &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:
+								   
+									<span t-field="o.xn_insurance_id"/>
+									<br/>
+								</span>
+							</div>
+						</div>
+					</div>
+					<br/>
+					<div style="border: 1px solid black;"> </div>
+					<div class="row">
+						<table class="table table-condensed" name="invoice_line_table">
+							<thead>
+								<tr>
+									<th class="text-left" width="20%">Barcode </th>
+									<th class="text-left" >Quantity</th>
+									<th class="text-left">Description</th>
+									<th class="text-left">&#160;</th>
+									<th class="text-left" width="20%">Product NO</th>
+									<th class="text-left">Packing</th>
+								   <!--  <th t-if="display_discount" class="text-right">Disc.(%)</th> -->
+									<th class="text-left">Unit Price</th>
+									<th class="text-left">Amount</th>
+								</tr>
+							</thead>
+							<tbody class="invoice_tbody">
+								<tr t-foreach="o.invoice_line_ids" t-as="l">
+									<td class="text-left" width="20%">
+										<span t-field="l.product_id.barcode"/></td>
+									<td class="text-right" >
+										<span t-esc="'%.0f'%l.quantity"/>
+										<!-- <span  t-esc="'%.0f'%o.l.quantity"/> -->
+									</td>
+									<td class="text-left">
+										<span t-field="l.product_id.name"/></td>
+
+									
+									
+									<td class="text-right" >
+										<span t-field="l.uom_id"/></td>
+									<td class="text-left" width="20%">
+										<span t-field="l.product_id.default_code"/>
+									</td>
+									<td class="text-left">
+										<span t-field="l.xn_package_id"/>
+									</td>
+									
+									<td class="text-right">
+										<span t-field="l.product_id.list_price"/>
+									</td>
+									<td class="text-right">
+										<span t-field="l.price_subtotal"/>
+										
+									</td>
+								</tr>
+								<tr>
+									<td class="text-right" colspan="7" style="border-top:1px solid black;">SUM <span t-field="o.currency_id"/></td>
+									<td class="text-right" style="border-top:1px solid black;"><span t-field="o.amount_untaxed"/></td>
+								</tr>
+								<!-- <tr>
+									<td class="text-right" colspan="7"> Freight <span t-field="o.currency_id"/></td>
+									<td class="text-right"></td>
+								</tr> -->
+								<tr>
+									<td class="text-right" colspan="7"> VAT <span t-field="o.currency_id"/></td>
+									<td class="text-right"> <span t-field="o.amount_tax"/></td>
+									
+								</tr>
+								<tr>
+									<td colspan="5" style="border-bottom:1px solid black;"><strong><span t-esc="o.currency_id.amount_to_text(o.amount_total)"/> only </strong></td> 
+									<td colspan="2" class="text-right" style="border-bottom:1px solid black;"><strong>TOTAL <span t-field="o.currency_id"/></strong></td>
+									<td class="text-right" style="border-bottom:1px solid black;"><strong><span t-field="o.amount_total"/> </strong> </td>	
+								</tr>
+							</tbody>
+						</table>
+						<span t-if="o.comment">NOTE &#160;:&#160; <span t-field="o.comment"/>
+						</span>
+					</div>
+				</div>
+			</t>
+		</t>
+	</t>
+</template>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record id="xn_order_tree" model="ir.ui.view">
+		<field name="name">order.tree</field>
+		<field name="model">sale.order</field>
+		<field name="arch" type="xml">
+			<tree string="Order">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="Order Number"/>
+                    <field name="date_order" string="Order Date"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="xn_order_action_new" model="ir.actions.act_window">
+		<field name="name">Order</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.order</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="xn_order_tree"/>
+		<field name="limit">1000</field>
+	</record>
+
+		<menuitem 
+		name = "Order"
+		id="xn_menu_order"
+		action="xn_order_action_new"
+		parent="sale.sale_order_menu"
+		sequence="3"/>
+
+</odoo>

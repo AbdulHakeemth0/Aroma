@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="xn_aroma_sale_order_form" model="ir.ui.view">
+				<field name="name">sale.order.custom.form.inherited</field>
+				<field name="model">sale.order</field>
+				<field name="inherit_id" ref="sale.view_order_form"/>
+				<field name="arch" type="xml">
+					
+					<xpath expr="//field[@name='payment_term_id']" position="after">
+						<field name="xn_insurance_id" groups="sales_team.group_sale_salesman" readonly="state != 'draft'"/>
+						<field name="xn_reference_no"  groups="sales_team.group_sale_salesman" readonly="state != 'draft'"/>
+						<field name="xn_transportation_id" readonly="state != 'draft'"/>
+					</xpath>
+
+                    <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                        <attribute name="groups">sales_team.group_sale_salesman</attribute>
+                    </xpath>
+                  
+<!--                    <xpath expr="//button[@name='print_quotation']" position="attributes">-->
+<!--                        <attribute name="groups">sales_team.group_sale_salesman</attribute>-->
+<!--                    </xpath>-->
+
+                    <xpath expr="//button[@name='action_confirm']" position="attributes">
+                        <attribute name="groups">sales_team.group_sale_salesman</attribute>
+                    </xpath>
+					  
+                    <xpath expr="//button[@name='action_cancel']" position="attributes">
+                        <attribute name="groups">sales_team.group_sale_salesman</attribute>
+                    </xpath>
+
+<!--                    <xpath expr="//button[@name='action_done']" position="attributes">-->
+<!--                        <attribute name="groups">sales_team.group_sale_salesman</attribute>-->
+<!--                    </xpath>-->
+
+                    <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                        <attribute name="groups">sales_team.group_sale_salesman</attribute>
+                    </xpath>
+
+					<field name="client_order_ref" position="replace"/>
+					<field name="payment_term_id" position="after" >
+						<field name="client_order_ref" groups="sales_team.group_sale_salesman" readonly="state != 'draft'"/>
+					</field>
+
+                    <xpath expr="//page[2]" position="attributes">
+                        <attribute name="groups">sales_team.group_sale_salesman</attribute>
+                    </xpath>
+
+
+					<field name="partner_shipping_id" position="attributes">
+						<attribute name="string">Mark Address</attribute>
+					</field>
+
+					<field name="note" position="before" >
+						<field name="xn_description_of_goods" class="oe_inline" placeholder="Description of Goods" readonly="state != 'draft'"/>
+					</field>
+
+					<field name="partner_invoice_id" position="replace"/>
+
+					<field name = "partner_id" position = "after" >
+						<field name = "xn_contact_id" options="{'no_create':True}" readonly="state != 'draft'"/>
+						<field name="partner_invoice_id" invisible="1"/>
+					</field>
+
+
+				     <field name="order_line" position="attributes">
+						     <attribute name="readonly" eval="1 if state in ('sale','done','cancel') else 0"/>
+
+<!--						 <attribute name="readonly">state != ('sale','done','cancel')</attribute>-->
+<!--				     	<attribute name="attrs">{'readonly': [('state', 'in', ('sale','done','cancel'))]}-->
+	                 </field>
+
+	                 <xpath expr="//page/group/group/field[@name = 'invoice_status']" position="after">
+						<field name="xn_delivery_status"/>
+					</xpath>
+			</field>
+
+		</record>
+
+		<record id="xn_aroma_sale_order_quotation_tree" model="ir.ui.view">
+				<field name="name">sale.order.quotation.tree.inherited</field>
+				<field name="model">sale.order</field>
+				<field name="inherit_id" ref="sale.view_quotation_tree"/>
+				<field name="arch" type="xml">
+					<field name = "amount_total" position = "after" >
+						<field name="xn_delivery_status"/>
+					</field>
+				</field>
+		</record>
+
+		<record id="xn_aroma_sale_order_tree" model="ir.ui.view">
+				<field name="name">sale.order.custom.tree.inherited</field>
+				<field name="model">sale.order</field>
+				<field name="inherit_id" ref="sale.view_order_tree"/>
+				<field name="arch" type="xml">
+					<field name = "amount_total" position = "after" >
+						<field name="xn_delivery_status"/>
+					</field>
+				</field>
+		</record>
+</odoo>
+                        

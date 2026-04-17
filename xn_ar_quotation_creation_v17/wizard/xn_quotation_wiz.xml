@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_immediate_transfer" model="ir.ui.view">
+		<field name="name">xn_quotation_creation_wiz2</field>
+		<field name="model">xn_quotation_creation_wiz</field>
+		<field name="arch" type="xml">
+			<form string="Quotation Creation">
+				<group>
+
+					<group>
+						 <field name = "xn_customer_id" readonly="1" invisible="xn_quotation_type == 'merge'"/>
+						 <field name = "xn_payment_term_id" readonly="1" invisible="xn_quotation_type == 'merge'"/>
+						 <field name = "xn_date" readonly="1" invisible="xn_quotation_type == 'merge'"/>
+						 <field name = "xn_shipping_mode_id" invisible="xn_quotation_type == 'merge'"/>
+						 <field name = "xn_shipping_address_id" readonly="1" invisible="xn_quotation_type == 'merge'"/>
+					</group>
+
+					<group>
+						<field name="xn_quotation_type" widget="selection" invisible='1'/>
+						<field name = "xn_quotation_id" invisible="xn_quotation_type == 'new'"/>
+					</group>			  	
+
+					<field name ="xn_quotation_lines" >
+						<tree editable = "bottom">
+							<field name = "xn_product_id" options="{'no_open':True}" />
+							<field name = "xn_qty"/>
+							<field name="xn_rate" readonly="1"/>
+							<field name = "xn_amount_wiz" readonly="1"/>
+						</tree>
+					</field>
+
+				</group>
+
+				<field name="xn_note" placeholder="Setup default terms and conditions in your sales settings ..." invisible="xn_quotation_type == 'merge'"/>
+
+				
+				<footer>
+					<button name="xn_create_quotation" string="Create Quotation" type="object" class="btn-primary" invisible="xn_quotation_type == 'merge'"/>
+
+
+					<button name="xn_mergequotation" string="Merge Quotation" type="object" class="btn-primary" invisible="xn_quotation_type == 'new'"/>
+
+
+				</footer>
+			</form>
+		</field>
+
+	</record>
+	<record id="od_group_wiz_action" model="ir.actions.act_window">
+		<field name="name">Create Group</field>
+		<field name="res_model">xn_quotation_creation_wiz</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+	<record id="action_sale_quotation_creation" model="ir.actions.act_window">
+		<field name="name">Order Creation</field>
+		<field name="res_model">xn_quotation_creation_wiz</field>
+		<field name="view_mode">form</field>
+<!--		<field name="src_model">product.product</field>-->
+		<field name="target">new</field>
+	</record>
+
+
+<!--	<act_window-->
+<!--			id="action_sale_quotation_creation"-->
+<!--			name="Order Creation"-->
+<!--			res_model="xn_quotation_creation_wiz"-->
+<!--			src_model="product.product"-->
+<!--			view_mode="form"-->
+<!--			multi="True"-->
+<!--			target="new"-->
+<!--			key2="client_action_multi"-->
+<!--		/>-->
+
+
+
+
+
+</odoo>
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+		<record id="xn_aroma_product_category_form" model="ir.ui.view">
+			<field name="name">aroma product template form</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='parent_id']" position="after">
+		    		<field name="xn_allow_place_order"/>
+		    	</xpath>
+			</field>
+	</record>
+</odoo>

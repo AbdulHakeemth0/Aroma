@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="quotation_creation_tree" model="ir.ui.view">
+        <field name="name">quotation.creation.tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Product" editable='top'>
+                <field name="sequence" widget="handle"/>
+                <field name="name" readonly="1"/>
+                <!-- <field name="categ_id"  readonly="1"/> -->
+                <field name="xn_quantity"/>
+                <field name="xn_price_usd"/>
+                <field name="xn_amount"/>
+                <!-- <field name="qty_available"  />
+                <field name="uom_id"  readonly="1" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/> -->
+                <field name="active" invisible="1"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record id="xn_quoation_creation_search" model="ir.ui.view">
+        <field name="name">Quotation Creation Search</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <filter name="services" position="before">
+                <filter string="DIFFUSERS" name="categ_id" domain="[('categ_id', '=', 'DIFFUSERS')]"/>
+                <filter string="OILS" name="categ_id" domain="[('categ_id', '!=', 'DIFFUSERS')]"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="xn_quoation_creation_new_field" model="ir.ui.view">
+        <field name="name">Quotation Creation new</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="after">
+                <field name="xn_price_usd" readonly="1"/>
+            </field>
+        </field>
+    </record>
+    <record id="xn_quotation_creation_action" model="ir.actions.act_window">
+        <field name="name">DIFFUSERS</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="quotation_creation_tree"/>
+        <field name="domain">[('xn_allow_place_order', '=', True),('sale_ok', '=', True),('categ_id', '=',
+            'DIFFUSERS'),('is_visible_to_distributor', '=', True)]
+        </field>
+        <field name="limit">1000</field>
+        <field name="context">{"search_default_filter_to_sell":1}</field>
+
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new product.
+            </p>
+            <p>
+                You must define a product for everything you sell, whether it's a physical product, a consumable or a
+                service you offer to customers.
+            </p>
+            <p>
+                The product form contains information to simplify the sale process: price, notes in the quotation,
+                accounting data, procurement methods, etc.
+            </p>
+        </field>
+    </record>
+    <record id="xn_quotation_creation_action2" model="ir.actions.act_window">
+        <field name="name">OILS</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="quotation_creation_tree"/>
+        <field name="domain">[('xn_allow_place_order', '=', True),('sale_ok', '=', True),('categ_id', '!=',
+            'DIFFUSERS'),('is_visible_to_distributor', '=', True)]
+        </field>
+        <field name="limit">1000</field>
+        <field name="context">{"search_default_filter_to_sell":1}</field>
+
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new product.
+            </p>
+            <p>
+                You must define a product for everything you sell, whether it's a physical product, a consumable or a
+                service you offer to customers.
+            </p>
+            <p>
+                The product form contains information to simplify the sale process: price, notes in the quotation,
+                accounting data, procurement methods, etc.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_quotations_send" model="ir.actions.act_window">
+        <field name="name">Quotations Send</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('state','=','sent')]</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+            </p>
+            <p>
+                Here shows the Drafted quotations.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_quotations_sale" model="ir.actions.act_window">
+        <field name="name">Sale Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('state','=','sale'),('xn_delivery_status','=','waiting')]</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+            </p>
+            <p>
+                confirmed Quotations as sale order are shows here.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_quotations_locked" model="ir.actions.act_window">
+        <field name="name">Delivered Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('state','=','sale'),('xn_delivery_status','=','delivered')]</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+            </p>
+            <p>
+                Locked Quotations are shows here.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_quotations_cancelled" model="ir.actions.act_window">
+        <field name="name">Cancelled Quotation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('state','=','cancel')]</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+            </p>
+            <p>
+                Cancelled quotations are shows here.
+            </p>
+        </field>
+    </record>
+
+
+    <record id="sale.action_orders" model="ir.actions.act_window">
+        <field name="name">Completed Sales Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+        <field name="domain">[('state','=','done')]</field>
+<!--        <field name="domain">[('xn_delivery_status','=','delivered')]</field>-->
+<!--        <field name="domain">[('invoice_status','=','invoiced')]</field>-->
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+    </record>
+
+
+<!--    <menuitem-->
+<!--            name="DIFFUSERS"-->
+<!--            id="menu_quotation_creation_from_product"-->
+<!--            action="xn_quotation_creation_action"-->
+<!--            parent="sale.sale_order_menu"-->
+<!--            sequence="1"/>-->
+
+<!--    <menuitem-->
+<!--            name="OILS"-->
+<!--            id="menu_quotation_creation_from_product2"-->
+<!--            action="xn_quotation_creation_action2"-->
+<!--            parent="sale.sale_order_menu"-->
+<!--            sequence="2"/>-->
+
+<!--    <menuitem id="sale.sale_order_menu"-->
+<!--              name="Orders"-->
+<!--              parent="sale.sale_menu_root"-->
+<!--              sequence="3"-->
+<!--    />-->
+
+    <menuitem id="sale.menu_sale_quotations"
+              action="sale.action_quotations"
+              parent="sale.sale_order_menu"
+              sequence="4" groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="sale.menu_sale_quotations_quotation"
+              name="Quotation Send"
+              action="action_quotations_send"
+              parent="sale.menu_sale_quotations"
+              sequence="1" groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="sale.menu_sales_order"
+              name="Sale Order"
+              action="action_quotations_sale"
+              parent="sale.menu_sale_quotations"
+              sequence="2" groups="sales_team.group_sale_salesman"/>
+    <menuitem id="sale.menu_sale_lock"
+              name="Delivered Orders"
+              action="action_quotations_locked"
+              parent="sale.menu_sale_quotations"
+              sequence="3" groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="sale.menu_sale_cancel"
+              name="Cancelled Quotations"
+              action="action_quotations_cancelled"
+              parent="sale.menu_sale_quotations"
+              sequence="4" groups="sales_team.group_sale_salesman"/>
+
+
+    <menuitem id="sale.menu_sale_order"
+              name="Completed Sales Orders"
+              action="sale.action_orders"
+              parent="sale.sale_order_menu"
+              sequence="5" groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="sale.res_partner_menu"
+              parent="sale.sale_menu_root"
+              action="base.action_partner_form"
+              sequence="1" groups="sales_team.group_sale_salesman"/>
+
+</odoo>

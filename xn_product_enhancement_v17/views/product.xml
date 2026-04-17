@@ -1,0 +1,169 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_inherited_view_">
+            <field name="name">Product</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[2]" position="after">
+                    <page string='Config'>
+                        <group col="2">
+                            <group>
+                                <field name='xn_group' />
+                                <field name='xn_sub_group' />
+                            </group>
+                            <group>
+                                <field name='xn_type' />
+                                <field name='xn_sub_type' />
+                            </group>
+                            <group>
+                                <field name='xn_brand' />
+                                <field name='xn_country' />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="group_product_form">
+            <field name="name">xn_group</field>
+            <field name="model">xn_group</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='name' />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="group_product_tree">
+            <field name="name">xn_group</field>
+            <field name="model">xn_group</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                </tree>
+            </field>
+        </record>
+        <record id="xn_group_form_action" model="ir.actions.act_window">
+            <field name="name">Group</field>
+            <field name="res_model">xn_group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="xn_sub_group_product_form">
+            <field name="name">xn_sub_group</field>
+            <field name="model">xn_sub_group</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='name' />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="xn_sub_group_product_tree">
+            <field name="name">xn_sub_group</field>
+            <field name="model">xn_sub_group</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                </tree>
+            </field>
+        </record>
+        <record id="xn_sub_group_form_action" model="ir.actions.act_window">
+            <field name="name">Group</field>
+            <field name="res_model">xn_sub_group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="xn_type_product_form">
+            <field name="name">xn_type</field>
+            <field name="model">xn_type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='name' />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="xn_type_product_tree">
+            <field name="name">xn_type</field>
+            <field name="model">xn_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                </tree>
+            </field>
+        </record>
+        <record id="xn_type_form_action" model="ir.actions.act_window">
+            <field name="name">Group</field>
+            <field name="res_model">xn_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="xn_sub_type_product_form">
+            <field name="name">xn_sub_type</field>
+            <field name="model">xn_sub_type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='name' />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="xn_sub_type_product_tree">
+            <field name="name">xn_sub_type</field>
+            <field name="model">xn_sub_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                </tree>
+            </field>
+        </record>
+        <record id="xn_sub_type_form_action" model="ir.actions.act_window">
+            <field name="name">Group</field>
+            <field name="res_model">xn_sub_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="xn_brand_product_form">
+            <field name="name">xn_brand</field>
+            <field name="model">xn_brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='name' />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="xn_brand_product_tree">
+            <field name="name">xn_brand</field>
+            <field name="model">xn_brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name='name' />
+                </tree>
+            </field>
+        </record>
+        <record id="xn_brand_form_action" model="ir.actions.act_window">
+            <field name="name">Group</field>
+            <field name="res_model">xn_brand</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Groups" id="xn_group_menu" parent="stock.menu_stock_config_settings" action="xn_group_form_action" />
+        <menuitem name="Sub Groups" id="xn_sub_group_menu" parent="stock.menu_stock_config_settings" action="xn_sub_group_form_action" />
+        <menuitem name="Types" id="xn_type_menu" parent="stock.menu_stock_config_settings" action="xn_type_form_action" />
+        <menuitem name="Sub Types" id="xn_sub_type_menu" parent="stock.menu_stock_config_settings" action="xn_sub_type_form_action" />
+        <menuitem name="Brand" id="xn_brand_menu" parent="stock.menu_stock_config_settings" action="xn_brand_form_action" />
+    </data>
+</odoo>

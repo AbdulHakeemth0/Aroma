@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="xn_external_layout_invoice_header">
+            <div class="header">
+            <div class="row">
+                <div class="col-xs-6">
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"/>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1" name="company_address">
+                    <ul class="list-unstyled">
+                        <strong><li t-if="company.name"><span t-field="company.name"/></li></strong>
+                        <li t-if="company.zip"><t t-esc="'P.O.Box: '"/><span t-field="company.zip"/>                 <t t-esc="company.state_id.name"/><t t-esc="' U.A.E'"/></li>
+                        
+                        <li t-if="company.phone">Tel: <span t-field="company.phone"/></li>
+                        <li t-if="company.vat"><t t-esc="company.country_id.vat_label or 'TRN'"/>: <span t-field="company.vat"/></li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer">
+          <div class="row mt8" style="border-top: 1px solid black;">
+                <div class="col-xs-5">
+                    <span t-field="company.report_footer"/>
+                </div>
+                <div class="col-xs-7 text-right">
+                    <span class="company_address" t-field="company.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                www.aroma-247.com   Email: info@aroma-247.com
+                </div>
+                &#160;&#160;&#160;&#160;&#160;<span>Page </span><span class="page" /> of <span class="topage" />
+               
+            </div>
+          
+        </div>
+    </template>
+
+    <!-- Public api: layout to t-call from reports -->
+
+    <template id="external_layout_invoice">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        
+        <t t-if="company.external_report_layout in (False, 'standard')">
+            <t t-call="xn_aroma_v17.xn_external_layout_invoice_header"><t t-raw="0"/></t>
+        </t>
+    </template>
+</odoo>
+

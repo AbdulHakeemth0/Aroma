@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="xn_aroma_product_template_form" model="ir.ui.view">
+        <field name="name">aroma product template form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="aroma_variant_creation" string="Variant creation" type="object"/>
+            </xpath>
+            <xpath expr="//page[3]" position="after">
+                <page name="aroma" string="Aroma Variants"
+                      invisible="xn_parent_id != False">
+                    <group>
+                        <field name="xn_description"/>
+                        <button name="aroma_copy" string="copy" type="object"/>
+                    </group>
+                    <field name="xn_varient_line">
+                        <tree editable="bottom">
+                            <field name="xn_uom_id"/>
+                            <field name="xn_list_price"/>
+                            <field name="xn_status" invisible='1'/>
+                            <field name="xn_product_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <field name="type" position="before">
+                <field name="xn_parent_id"
+                       invisible="xn_parent_id != False"/>
+            </field>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_visible_to_distributor"/>
+                <label for="is_visible_to_distributor"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+	<data>
+		<report
+			id="aroma_invoice_report1_id"
+		    model="account.move"
+		    string="Aroma Invoice"
+		    report_type="qweb-pdf"
+		    name="account.aroma_invoice_report1"
+		    file="account.aroma_invoice_report1"
+		/>
+	</data>
+</odoo>
